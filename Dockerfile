@@ -8,8 +8,13 @@ RUN apt-get install -y curl zsh git vim
 RUN curl -sL https://deb.nodesource.com/setup  | sudo bash -
 RUN apt-get install -y nodejs
 
+# Install hub
+RUN cd /usr/local/bin && curl -L https://github.com/github/hub/releases/download/v2.2.0/hub-linux-amd64-2.2.0.tar.gz | tar zx && cp hub-linux-amd64-2.2.0/hub .
+
 # Install oh-my-zsh
-RUN curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh
+RUN git clone https://github.com/robbyrussell/oh-my-zsh.git /root/.oh-my-zsh/
+ADD .zshrc /root/.zshrc
+
 
 # Enable ssh-agent
 RUN eval `ssh-agent -s`

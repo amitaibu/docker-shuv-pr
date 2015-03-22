@@ -30,3 +30,6 @@ node ../download_images.js $TOKEN $JSON
 git add --all
 git commit -am "New files"
 git push --set-upstream origin $NEW_BRANCH
+
+# Open Pull request
+hub pull-request -m "Update baseline from branch $BRANCH" -b amitaibu:$BRANCH -h amitaibu:$NEW_BRANCH
