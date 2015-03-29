@@ -1,11 +1,13 @@
 #!/usr/bin/env bash
 
-TOKEN=$1
+ACCESS_TOKEN=$1
 REPO=$2
 BRANCH=$3
 NEW_BRANCH=$4
-JSON=$5
+SCREENSHOT_IDS=$5
 SSH_KEY=$6
+
+REPO_ARRAY=(${REPO//\// })
 
 # Create an SSH key.
 touch ~/.ssh/id_rsa
@@ -20,11 +22,11 @@ git config --global user.email "robot@example.com"
 git config --global user.name "Robot"
 
 cd clone
-git clone --branch=$BRANCH --depth=1 --quiet $REPO .
+hub clone -p --branch=$BRANCH --depth=1 --quiet $REPO .
 git checkout -b $NEW_BRANCH
 
 # Download images
-node ../download_images.js $TOKEN $JSON
+node ../download_images.js $ACCESS_TOKEN $SCREENSHOT_IDS
 
 # Push new branch
 git add --all
@@ -32,4 +34,4 @@ git commit -am "New files"
 git push --set-upstream origin $NEW_BRANCH
 
 # Open Pull request
-hub pull-request -m "Update baseline from branch $BRANCH" -b amitaibu:$BRANCH -h amitaibu:$NEW_BRANCH
+hub pull-request -m "Update baseline from branch $BRANCH" -b $REPO_ARRAY[0]:$BRANCH -h $REPO_ARRAY[0]:$NEW_BRANCH
