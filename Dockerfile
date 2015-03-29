@@ -18,7 +18,6 @@ ADD hub_config /root/.config/hub
 RUN git clone https://github.com/robbyrussell/oh-my-zsh.git /root/.oh-my-zsh/
 ADD .zshrc /root/.zshrc
 
-
 # Enable ssh-agent
 RUN eval `ssh-agent -s`
 

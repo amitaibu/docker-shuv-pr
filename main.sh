@@ -16,8 +16,8 @@ chmod 600 ~/.ssh/id_rsa
 cd /home
 mkdir clone
 
-git config --global user.email "you@example.com"
-git config --global user.name "Your Name"
+git config --global user.email "robot@example.com"
+git config --global user.name "Robot"
 
 cd clone
 git clone --branch=$BRANCH --depth=1 --quiet $REPO .
