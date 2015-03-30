@@ -69,7 +69,6 @@ getBuild(arguments[0])
   })
   .then(function(response) {
     var data = JSON.parse(response).data[0];
-    console.log(R.prop('ssh_private_key', data));
     process.stdout.write(R.prop('ssh_private_key', data));
   })
   .catch(function(err) {
