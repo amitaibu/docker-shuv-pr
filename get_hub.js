@@ -15,7 +15,6 @@ var accessToken = arguments[0];
 
 var githubUsername;
 var githubAccessToken
-var homeDir = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
 
 /**
  * Get User data.
@@ -41,6 +40,8 @@ var getUser = function() {
 
 getUser()
   .then(function(response) {
+    var homeDir = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
+
     // Get the ssh key from the repository.
     var data = JSON.parse(response).data[0];
     githubUsername = data.label;
@@ -53,7 +54,7 @@ getUser()
       .replace(/<username>/gmi, githubUsername)
       .replace(/<access_token>/g, githubAccessToken);
 
-    return fs.writeFileAsync(homeDir + '/.config.hub', data);
+    process.stdout.write(data);
   })
   .catch(function(err) {
     console.log(err);
