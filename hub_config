@@ -1,5 +1,5 @@
 # ~/.config/hub
 github.com:
-- user: <name>
-  oauth_token: <token>
+- user: <username>
+  oauth_token: <access_token>
   protocol: https

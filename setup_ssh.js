@@ -1,5 +1,5 @@
 var Promise = require('bluebird');
-var fs = Promise.promisifyAll(require("fs"))
+var fs = Promise.promisifyAll(require('fs'));
 var rp = require('request-promise');
 var mkdirp = Promise.promisifyAll(require('mkdirp'));
 var path = require('path');
