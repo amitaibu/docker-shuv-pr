@@ -7,9 +7,10 @@ ACCESS_TOKEN=$4
 
 BUILD_INFO=$(node /home/build_info.js $BUILD_ID $ACCESS_TOKEN)
 
-OWNER=$(echo $BUILD_INFO | jq '.owner')
-REPO=$(echo $BUILD_INFO | jq '.repo')
-BRANCH=$(echo $BUILD_INFO | jq '.branch')
+# Get the values from the JSON and trim the qoute (") signs.
+OWNER=$(echo $BUILD_INFO | jq '.owner' | cut -d '"' -f 2)
+REPO=$(echo $BUILD_INFO | jq '.repo' | cut -d '"' -f 2)
+BRANCH=$(echo $BUILD_INFO | jq '.branch' | cut -d '"' -f 2)
 
 # Create an SSH key.
 touch ~/.ssh/id_rsa
