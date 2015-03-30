@@ -27,8 +27,8 @@ git config --global user.name "Robot"
 
 # Setup hub
 node /home/get_hub.js $ACCESS_TOKEN
-cat ~/.config/hub
 
+# Clone repo
 cd clone
 hub clone -p --branch=$BRANCH --depth=1 --quiet $OWNER/$REPO .
 git checkout -b $NEW_BRANCH
@@ -42,4 +42,7 @@ git commit -am "New files"
 git push --set-upstream origin $NEW_BRANCH
 
 # Open Pull request
-hub pull-request -m "Update baseline from branch $BRANCH" -b $OWNER:$BRANCH -h $OWNER:$NEW_BRANCH
+PR=$(hub pull-request -m "Update baseline from branch $BRANCH" -b $OWNER:$BRANCH -h $OWNER:$NEW_BRANCH)
+
+# Send back the pull request info to the build
+curl -X PATCH $BACKEND_URL/api/builds/$BUILD_ID?access_token=$ACCESS_TOKEN -d "pull_request=$PR"
