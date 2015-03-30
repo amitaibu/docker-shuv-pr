@@ -23,7 +23,11 @@ mkdir clone
 
 git config --global user.email "robot@example.com"
 git config --global user.name "Robot"
-node /home/get_hub.js $ACCESS_TOKEN > ~/.config/hub
+
+
+# Setup hub
+node /home/get_hub.js $ACCESS_TOKEN
+cat ~/.config/hub
 
 cd clone
 hub clone -p --branch=$BRANCH --depth=1 --quiet $OWNER/$REPO .
