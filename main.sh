@@ -37,4 +37,4 @@ git commit -am "New files"
 git push --set-upstream origin $NEW_BRANCH
 
 # Open Pull request
-hub pull-request -m "Update baseline from branch $BRANCH" -b OWNER:$BRANCH -h OWNER:$NEW_BRANCH
+hub pull-request -m "Update baseline from branch $BRANCH" -b $OWNER:$BRANCH -h $OWNER:$NEW_BRANCH

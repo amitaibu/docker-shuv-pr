@@ -20,7 +20,7 @@ var accessToken = arguments[1];
 
 
 var getFilesInfo = function(ids) {
-  var backendUrl = process.env.BACKEND_URL || 'http://1e32102f.ngrok.com/shuv/www';
+  var backendUrl = process.env.BACKEND_URL;
 
   var options = {
     url: backendUrl + '/api/screenshots/' + ids,

@@ -25,7 +25,7 @@ var githubAccessToken
  * @returns {*}
  */
 var getUser = function() {
-  var backendUrl = 'http://localhost/shoov/www';
+  var backendUrl = process.env.BACKEND_URL;
   var options = {
     url: backendUrl + '/api/me/',
     qs: {

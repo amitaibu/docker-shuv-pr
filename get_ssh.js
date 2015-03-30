@@ -26,7 +26,7 @@ var accessToken = arguments[1];
  * @returns {*}
  */
 var getBuild = function(buildId) {
-  var backendUrl = 'http://localhost/shoov/www';
+  var backendUrl = process.env.BACKEND_URL;
   var options = {
     url: backendUrl + '/api/builds/' + buildId,
     qs: {
@@ -47,7 +47,7 @@ var getBuild = function(buildId) {
  * @returns {*}
  */
 var getRepository = function(repoId) {
-  var backendUrl = 'http://localhost/shoov/www';
+  var backendUrl = process.env.BACKEND_URL;
   var options = {
     url: backendUrl + '/api/repositories/' + repoId,
     qs: {
