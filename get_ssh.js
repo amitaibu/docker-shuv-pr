@@ -69,10 +69,7 @@ getBuild(arguments[0])
   })
   .then(function(response) {
     var data = JSON.parse(response);
-
-    var homeDir = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
-
-    return fs.writeFileAsync(homeDir + '/foo.txt', R.prop('ssh_private_key', data.data[0]));
+    process.stdout.write(R.prop('ssh_private_key', data.data[0]));
   })
   .catch(function(err) {
     console.log(err);

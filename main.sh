@@ -11,7 +11,7 @@ REPO_ARRAY=(${REPO//\// })
 
 # Create an SSH key.
 touch ~/.ssh/id_rsa
-echo $SSH_KEY | base64 --decode > ~/.ssh/id_rsa
+node get_ssh > ~/.ssh/id_rsa
 chmod 600 ~/.ssh/id_rsa
 
 # Clone repo
