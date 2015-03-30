@@ -53,7 +53,7 @@ var getRepository = function(repoId) {
     qs: {
       access_token: accessToken,
       fields: 'id,ssh_private_key',
-      ssh_key: 1
+      ssh_key: true
     }
   };
 

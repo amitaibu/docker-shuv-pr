@@ -30,24 +30,34 @@ var getUser = function(userId) {
     url: backendUrl + '/api/me/',
     qs: {
       access_token: accessToken,
-      fields: 'id,label, github_access_token'
+      fields: 'id,label, github_access_token',
+      github_access_token: true
     }
   };
 
   return rp.get(options);
 };
 
+var githubUsername;
+var githubAccessToken
+var homeDir = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
+
+
 getUser(arguments[0])
   .then(function(response) {
     // Get the ssh key from the repository.
-    var data = JSON.parse(response);
-    var repoId = data.data[0].repository;
-  })
-  .then(function(response) {
-    var data = JSON.parse(response);
+    var data = JSON.parse(response).data[0];
+    githubUsername = data.label;
+    githubAccessToken = data.github_access_token;
 
-    var homeDir = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
-    // return fs.writeFileAsync(homeDir + '/.config.hub', R.prop('ssh_private_key', data.data[0]));
+    return fs.readFileAsync(homeDir + '/.config/hub');
+  })
+  .then(function(data) {
+    data
+      .replace('<username>', githubUsername)
+      .replace('<access_token>', githubAccessToken);
+
+    return fs.writeFileAsync(homeDir + '/.config.hub', data);
   })
   .catch(function(err) {
     console.log(err);
