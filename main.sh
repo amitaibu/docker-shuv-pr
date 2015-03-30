@@ -11,7 +11,7 @@ REPO_ARRAY=(${REPO//\// })
 
 # Create an SSH key.
 touch ~/.ssh/id_rsa
-node get_ssh > ~/.ssh/id_rsa
+node get_ssh.js > ~/.ssh/id_rsa
 chmod 600 ~/.ssh/id_rsa
 
 # Clone repo
@@ -20,6 +20,7 @@ mkdir clone
 
 git config --global user.email "robot@example.com"
 git config --global user.name "Robot"
+node get_hub.js > ~/.config/hub
 
 cd clone
 hub clone -p --branch=$BRANCH --depth=1 --quiet $REPO .
