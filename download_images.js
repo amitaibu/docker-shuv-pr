@@ -54,6 +54,7 @@ var downloadFile = function(obj) {
     }
   };
 
+  obj.directory_prefix = obj.directory_prefix || '';
   var fileName = obj.directory_prefix + obj.baseline_name;
 
   mkdirp.mkdirpAsync(path.dirname(fileName))
