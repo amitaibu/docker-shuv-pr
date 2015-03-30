@@ -15,46 +15,65 @@ else if (!arguments[1]) {
   throw new Error('Access token not passed.');
 }
 
-
+var accessToken = arguments[1];
 
 /**
- * Get SSH key.
+ * Get Build data.
  *
  * @param buildId
- * @param accessToken
+ *   The build ID.
+ *
  * @returns {*}
  */
-var getSshKey = function(buildId, accessToken) {
-
+var getBuild = function(buildId) {
   var backendUrl = 'http://localhost/shoov/www';
   var options = {
     url: backendUrl + '/api/builds/' + buildId,
     qs: {
       access_token: accessToken,
-      fields: 'id,baseline_name,regression,directory_prefix'
+      fields: 'id,repository'
     }
   };
 
-  var req = rp.get(options);
-  req
-    .on('error', function (err) {
-      throw new Error(err);
-    })
-    .on('response', function(response) {
-      if (response.statusCode !== 200) {
-        throw new Error('Access token is incorrect');
-      }
-    });
-
-  return req;
+  return rp.get(options);
 };
 
-var pickSshKey = function(obj) {
-  return R.prop('git_commit', obj);
+/**
+ * Get Repository data.
+ *
+ * @param repoId
+ *   The repository ID.
+ *
+ * @returns {*}
+ */
+var getRepository = function(repoId) {
+  var backendUrl = 'http://localhost/shoov/www';
+  var options = {
+    url: backendUrl + '/api/repositories/' + repoId,
+    qs: {
+      access_token: accessToken,
+      fields: 'id,ssh_private_key',
+      ssh_key: 1
+    }
+  };
+
+  return rp.get(options);
 };
 
-getSshKey(arguments[0], arguments[1])
+getBuild(arguments[0])
+  .then(function(response) {
+    // Get the ssh key from the repository.
+    var data = JSON.parse(response);
+    var repoId = data.data[0].repository;
+    return getRepository(repoId);
+  })
   .then(function(response) {
     var data = JSON.parse(response);
-    return fs.writeFileAsync('foo.txt', pickSshKey(data.data[0]));
+
+    var homeDir = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
+
+    return fs.writeFileAsync(homeDir + '/foo.txt', R.prop('ssh_private_key', data.data[0]));
+  })
+  .catch(function(err) {
+    console.log(err);
   });
