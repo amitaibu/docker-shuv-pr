@@ -9,7 +9,7 @@ RUN curl -sL https://deb.nodesource.com/setup  | sudo bash -
 RUN apt-get install -y nodejs
 
 # Install jq
-RUN cd /usr/local/bin && curl -O http://stedolan.github.io/jq/download/linux64/jq
+RUN cd /usr/local/bin && curl -O http://stedolan.github.io/jq/download/linux64/jq && chmod +x jq
 
 # Install hub
 RUN cd /usr/local/bin && curl -L https://github.com/github/hub/releases/download/v2.2.0/hub-linux-amd64-2.2.0.tar.gz | tar zx && cp hub-linux-amd64-2.2.0/hub .
@@ -40,7 +40,11 @@ ADD package.json /temp-build/package.json
 RUN cd /temp-build && npm install --verbose
 RUN cp -R /temp-build/node_modules /home
 
-ADD main.sh /home/main.sh
+ADD build_info.js /home/build_info.js
+ADD get_hub.js /home/get_hub.js
+ADD get_ssh.js /home/get_ssh.js
 ADD download_images.js /home/download_images.js
+
+ADD main.sh /home/main.sh
 
 CMD /home/main.sh
