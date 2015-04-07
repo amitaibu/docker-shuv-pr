@@ -17,7 +17,7 @@ RUN cd /usr/local/bin && curl -L https://github.com/github/hub/releases/download
 
 # Add hub config and .netrc template
 ADD _hub /root/.config/hub
-ADD _netrc /root/.config/.netrc
+ADD _netrc /root/.netrc
 
 # Install oh-my-zsh
 RUN git clone https://github.com/robbyrussell/oh-my-zsh.git /root/.oh-my-zsh/

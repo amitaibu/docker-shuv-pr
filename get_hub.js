@@ -64,7 +64,7 @@ getUser()
     data = data
       .replace(/<access_token>/g, githubAccessToken);
 
-    return fs.writeFileAsync(homeDir + '/.config/hub', data);
+    return fs.writeFileAsync(homeDir + '/.netrc', data);
   })
   .catch(function(err) {
     console.log(err);
