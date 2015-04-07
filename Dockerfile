@@ -43,7 +43,6 @@ RUN cp -R /temp-build/node_modules /home
 
 ADD build_info.js /home/build_info.js
 ADD get_hub.js /home/get_hub.js
-ADD get_ssh.js /home/get_ssh.js
 ADD download_images.js /home/download_images.js
 
 ADD main.sh /home/main.sh
