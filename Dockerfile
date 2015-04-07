@@ -15,8 +15,9 @@ RUN cd /usr/local/bin && curl -O http://stedolan.github.io/jq/download/linux64/j
 RUN cd /usr/local/bin && curl -L https://github.com/github/hub/releases/download/v2.2.0/hub-linux-amd64-2.2.0.tar.gz | tar zx && cp hub-linux-amd64-2.2.0/hub .
 
 
-# Add hub config template
-ADD hub_config /root/.config/hub
+# Add hub config and .netrc template
+ADD _hub /root/.config/hub
+ADD _netrc /root/.config/.netrc
 
 # Install oh-my-zsh
 RUN git clone https://github.com/robbyrussell/oh-my-zsh.git /root/.oh-my-zsh/

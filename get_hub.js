@@ -50,7 +50,18 @@ getUser()
   })
   .then(function(data) {
     data = data
-      .replace(/<username>/gmi, githubUsername)
+      .replace(/<username>/g, githubUsername)
+      .replace(/<access_token>/g, githubAccessToken);
+
+    return fs.writeFileAsync(homeDir + '/.config/hub', data);
+  })
+  .then(function() {
+    // Prepare ~/.netrc with the user's access token and password, so we won't
+    // get a prompt.
+    return fs.readFileAsync(homeDir + '/.netrc', 'utf8');
+  })
+  .then(function(data) {
+    data = data
       .replace(/<access_token>/g, githubAccessToken);
 
     return fs.writeFileAsync(homeDir + '/.config/hub', data);

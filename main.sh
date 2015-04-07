@@ -12,11 +12,6 @@ OWNER=$(echo $BUILD_INFO | jq '.owner' | cut -d '"' -f 2)
 REPO=$(echo $BUILD_INFO | jq '.repo' | cut -d '"' -f 2)
 BRANCH=$(echo $BUILD_INFO | jq '.branch' | cut -d '"' -f 2)
 
-# Create an SSH key.
-touch ~/.ssh/id_rsa
-node /home/get_ssh.js $BUILD_ID $ACCESS_TOKEN > ~/.ssh/id_rsa
-chmod 600 ~/.ssh/id_rsa
-
 # Clone repo
 cd /home
 mkdir clone
@@ -30,7 +25,8 @@ node /home/get_hub.js $ACCESS_TOKEN
 
 # Clone repo
 cd clone
-hub clone -p --branch=$BRANCH --depth=1 --quiet $OWNER/$REPO .
+git config --global hub.protocol https
+hub clone --branch=$BRANCH --depth=1 --quiet $OWNER/$REPO .
 git checkout -b $NEW_BRANCH
 
 # Download images
@@ -39,7 +35,7 @@ node /home/download_images.js $SCREENSHOT_IDS $ACCESS_TOKEN
 # Push new branch
 git add --all
 git commit -am "New files"
-git push --set-upstream origin $NEW_BRANCH
+hub push --set-upstream origin $NEW_BRANCH
 
 # Open Pull request
 PR=$(hub pull-request -m "Update baseline from branch $BRANCH" -b $OWNER:$BRANCH -h $OWNER:$NEW_BRANCH)
