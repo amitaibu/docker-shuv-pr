@@ -13,7 +13,6 @@ REPO=$(echo $BUILD_INFO | jq '.repo' | cut -d '"' -f 2)
 BRANCH=$(echo $BUILD_INFO | jq '.branch' | cut -d '"' -f 2)
 
 # Clone repo
-cd /home
 mkdir clone
 
 git config --global user.email "robot@example.com"
