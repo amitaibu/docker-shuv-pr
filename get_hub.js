@@ -15,7 +15,7 @@ var accessToken = args[0];
 
 var githubUsername;
 var githubAccessToken;
-var homeDir = process.env[(process.platform == 'win32') ? 'USERPROFILE' : 'HOME'];
+var homeDir = process.env['HOME'];
 
 /**
  * Get User data.

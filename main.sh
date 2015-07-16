@@ -5,7 +5,7 @@ SCREENSHOT_IDS=$2
 NEW_BRANCH=$3
 ACCESS_TOKEN=$4
 
-BUILD_INFO=$(node /home/build_info.js $BUILD_ID $ACCESS_TOKEN)
+BUILD_INFO=$(node /home/shoov/build_info.js $BUILD_ID $ACCESS_TOKEN)
 
 # Get the values from the JSON and trim the qoute (") signs.
 OWNER=$(echo $BUILD_INFO | jq '.owner' | cut -d '"' -f 2)
@@ -21,7 +21,7 @@ git config --global user.name "Robot"
 
 
 # Setup hub
-node /home/get_hub.js $ACCESS_TOKEN
+node /home/shoov/get_hub.js $ACCESS_TOKEN
 
 # Clone repo
 cd clone
@@ -30,7 +30,7 @@ hub clone --branch=$BRANCH --depth=1 --quiet $OWNER/$REPO .
 git checkout -b $NEW_BRANCH
 
 # Download images
-node /home/download_images.js $SCREENSHOT_IDS $ACCESS_TOKEN
+node /home/shoov/download_images.js $SCREENSHOT_IDS $ACCESS_TOKEN
 
 # Push new branch
 git add --all

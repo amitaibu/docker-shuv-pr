@@ -42,7 +42,7 @@ var getFilesInfo = function(ids) {
     });
 
   return req;
-}
+};
 
 
 var downloadFile = function(obj) {
