@@ -5,18 +5,18 @@ var mkdirp = Promise.promisifyAll(require('mkdirp'));
 var path = require('path');
 var R = require('ramda');
 
-var arguments = process.argv.slice(2);
+var args = process.argv.slice(2);
 
 
-if (!arguments[0]) {
+if (!args[0]) {
   throw new Error('Screenshots IDs not passed.');
 }
-else if (!arguments[1]) {
+else if (!args[1]) {
   throw new Error('Access token not passed.');
 }
 
-var screenshotIds = arguments[0];
-var accessToken = arguments[1];
+var screenshotIds = args[0];
+var accessToken = args[1];
 
 
 var getFilesInfo = function(ids) {

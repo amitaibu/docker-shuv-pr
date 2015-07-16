@@ -1,17 +1,17 @@
 var Promise = require('bluebird');
 var rp = require('request-promise');
 
-var arguments = process.argv.slice(2);
+var args = process.argv.slice(2);
 
 
-if (!arguments[0]) {
+if (!args[0]) {
   throw new Error('Build ID not passed.');
 }
-else if (!arguments[1]) {
+else if (!args[1]) {
   throw new Error('Access token not passed.');
 }
 
-var accessToken = arguments[1];
+var accessToken = args[1];
 
 /**
  * Get Build data.
@@ -58,7 +58,7 @@ var getRepository = function(repoId) {
 
 var output = {};
 
-getBuild(arguments[0])
+getBuild(args[0])
   .then(function(response) {
     // Build data.
     var data = JSON.parse(response).data[0];
